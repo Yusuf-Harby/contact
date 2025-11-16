@@ -36,6 +36,9 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_native_splash: ^2.4.7
   flutter_screenutil: ^5.9.3
+  lottie: ^3.3.1
+  image_picker: ^1.2.1
+  google_fonts: ^6.3.2
 
 dev_dependencies:
   flutter_test:
@@ -63,6 +66,7 @@ flutter:
   assets:
     - assets/screens/
     - assets/icons/
+    - assets/animations/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
