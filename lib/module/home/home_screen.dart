@@ -1,5 +1,5 @@
-import 'package:contact/app_colors.dart';
-import 'package:contact/contact_data.dart';
+import 'package:contact/core/app_colors.dart';
+import 'package:contact/data/models/contact_data.dart';
 import 'package:contact/module/home/widgets/add_contact_widget.dart';
 import 'package:contact/module/home/widgets/text_form_field_widget.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +8,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   static const String routeName = '/home';
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<Contact> contacts = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,24 +46,26 @@ class HomeScreen extends StatelessWidget {
         child: FloatingActionButton(
           child: Icon(Icons.add, size: 29.w, color: AppColors.primary),
           onPressed: () {
-            showBottomSheet(context);
+            showModalBottomSheet(
+              backgroundColor: AppColors.primary,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40.r),
+                  topRight: Radius.circular(40.r),
+                ),
+              ),
+              context: context,
+              builder: (context) => AddContactWidget(
+                addUser: (Contact contact) {
+                  contacts.add(contact);
+                  Navigator.pop(context);
+                  setState(() {});
+                },
+              ),
+            );
           },
         ),
       ),
-    );
-  }
-
-  Future<dynamic> showBottomSheet(BuildContext context) {
-    return showModalBottomSheet(
-      backgroundColor: AppColors.primary,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(40.r),
-          topRight: Radius.circular(40.r),
-        ),
-      ),
-      context: context,
-      builder: (context) => AddContactWidget(addUser: (Contact contact) {  },),
     );
   }
 }

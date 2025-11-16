@@ -1,4 +1,4 @@
-import 'package:contact/app_colors.dart';
+import 'package:contact/core/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

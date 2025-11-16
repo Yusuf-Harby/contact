@@ -1,11 +1,12 @@
 import 'dart:io';
 
-import 'package:contact/app_colors.dart';
-import 'package:contact/contact_data.dart';
+import 'package:contact/core/app_colors.dart';
+import 'package:contact/data/models/contact_data.dart';
 import 'package:contact/module/home/widgets/text_form_field_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 
 class AddContactWidget extends StatefulWidget {
@@ -34,6 +35,16 @@ class _AddContactWidgetState extends State<AddContactWidget> {
               spacing: 10.w,
               children: [
                 GestureDetector(
+                  onTap: () async {
+                    ImagePicker imagePicker = ImagePicker();
+                    XFile? image = await imagePicker.pickImage(
+                      source: ImageSource.gallery,
+                    );
+                    if (image != null) {
+                      this.image = File(image.path);
+                      setState(() {});
+                    }
+                  },
                   child: Container(
                     height: 146.h,
                     width: 143.w,
@@ -43,11 +54,19 @@ class _AddContactWidgetState extends State<AddContactWidget> {
                         color: AppColors.secondary,
                         width: 1.w,
                       ),
+                      image: image != null
+                          ? DecorationImage(
+                              image: FileImage(image!),
+                              fit: BoxFit.cover,
+                            )
+                          : null,
                     ),
-                    child: Lottie.asset(
-                      'assets/animations/image_picker.json',
-                      repeat: false,
-                    ),
+                    child: image == null
+                        ? Lottie.asset(
+                            'assets/animations/image_picker.json',
+                            repeat: false,
+                          )
+                        : null,
                   ),
                 ),
                 Column(
